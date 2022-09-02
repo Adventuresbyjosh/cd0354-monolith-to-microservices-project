@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-user
+spec:
+  selector:
+    matchLabels:
+      run: backend-user
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: backend-user
+    spec:
+      containers:
+      - name: backend-user
+        image: docker.io/adventuresbyjosh/udagram-api-user:v2
+        env:
+        - name: POSTGRES_USERNAME
+          value: udagramdb
+        - name: POSTGRES_PASSWORD
+          value: Exploits
+        - name: POSTGRES_HOST
+          value: udagramdb4.cnm9is4dpuzd.us-east-1.rds.amazonaws.com
+        - name: POSTGRES_DB
+          value: postgres
+        - name: AWS_BUCKET
+          value: udagram-bk3
+        - name: AWS_REGION
+          value: us-east-1
+        - name: AWS_PROFILE
+          value: default
+        - name: JWT_SECRET
+          value: hello
+        - name: URL
+          value: http://localhost:8100
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+          requests:
+            cpu: 100m
